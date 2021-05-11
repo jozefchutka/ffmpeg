@@ -10,7 +10,7 @@ export PATH=$PATH:$EMSDK/upstream/bin
 # Flags for code optimization, focus on speed instead
 # of size
 OPTIM_FLAGS=(
-  -O3
+  -O0
 )
 
 #if [[ "$OSTYPE" == "linux-gnu"* ]]; then
