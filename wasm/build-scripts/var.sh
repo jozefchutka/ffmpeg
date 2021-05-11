@@ -13,13 +13,13 @@ OPTIM_FLAGS=(
   -O3
 )
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+#if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   # Use closure complier only in linux environment
-  OPTIM_FLAGS=(
-    "${OPTIM_FLAGS[@]}"
-    --closure 1
-  )
-fi
+#  OPTIM_FLAGS=(
+#    "${OPTIM_FLAGS[@]}"
+#    --closure 1
+#  )
+#fi
 
 # Convert array to string
 OPTIM_FLAGS="${OPTIM_FLAGS[@]}"
@@ -37,7 +37,7 @@ CFLAGS="-s USE_PTHREADS=1 -I$BUILD_DIR/include $OPTIM_FLAGS"
 LDFLAGS="$CFLAGS -L$BUILD_DIR/lib"
 FFMPEG_CONFIG_FLAGS_BASE=(
   --target-os=none        # use none to prevent any os specific configurations
-  --arch=x86_32           # use x86_32 to achieve minimal architectural optimization
+  --arch=x86_64           # use x86_32 to achieve minimal architectural optimization
   --enable-cross-compile  # enable cross compile
   --disable-x86asm        # disable x86 asm
   --disable-inline-asm    # disable inline asm
