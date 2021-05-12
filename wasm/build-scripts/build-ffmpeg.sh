@@ -24,7 +24,6 @@ FLAGS=(
   -s INITIAL_MEMORY=2146435072                  # 64 KB * 1024 * 16 * 2047 = 2146435072 bytes ~= 2 GB
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb
-  -s MALLOC=dlmalloc
   $OPTIM_FLAGS
 )
 echo "FFMPEG_EM_FLAGS=${FLAGS[@]}"
