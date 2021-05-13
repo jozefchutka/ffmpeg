@@ -165,17 +165,6 @@ static int scc_read_header(AVFormatContext *s)
         sub = ff_subtitles_queue_insert(&scc->q, out, i, 0);
         if (!sub)
             goto fail;
-<<<<<<< HEAD
-
-        sub->pos = current_pos;
-        sub->pts = ts_start;
-        sub->duration = ts_end - ts_start;
-        memmove(line, line2, sizeof(line));
-        current_pos = next_pos;
-        line2[0] = 0;
-    }
-=======
->>>>>>> n4.4
 
         sub->pos = pos;
         sub->pts = ts;
@@ -185,11 +174,7 @@ static int scc_read_header(AVFormatContext *s)
 
     ff_subtitles_queue_finalize(s, &scc->q);
 
-<<<<<<< HEAD
-    return ret;
-=======
     return 0;
->>>>>>> n4.4
 fail:
     ff_subtitles_queue_clean(&scc->q);
     return AVERROR(ENOMEM);

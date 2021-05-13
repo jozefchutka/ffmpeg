@@ -305,16 +305,11 @@ static struct playlist *new_playlist(HLSContext *c, const char *url,
         return NULL;
     }
     ff_make_absolute_url(pls->url, sizeof(pls->url), base, url);
-<<<<<<< HEAD
-    if (!pls->url[0])
-        return NULL;
-=======
     if (!pls->url[0]) {
         av_packet_free(&pls->pkt);
         av_free(pls);
         return NULL;
     }
->>>>>>> n4.4
     pls->seek_timestamp = AV_NOPTS_VALUE;
 
     pls->is_id3_timestamped = -1;
@@ -1996,15 +1991,9 @@ static int hls_read_header(AVFormatContext *s)
                           read_data, NULL, NULL);
         pls->ctx->probesize = s->probesize > 0 ? s->probesize : 1024 * 4;
         pls->ctx->max_analyze_duration = s->max_analyze_duration > 0 ? s->max_analyze_duration : 4 * AV_TIME_BASE;
-<<<<<<< HEAD
-        url = av_strdup(pls->segments[0]->url);
-        ret = av_probe_input_buffer(&pls->pb, &in_fmt, url, NULL, 0, 0);
-        av_free(url);
-=======
         pls->ctx->interrupt_callback = s->interrupt_callback;
         url = av_strdup(pls->segments[0]->url);
         ret = av_probe_input_buffer(&pls->pb, &in_fmt, url, NULL, 0, 0);
->>>>>>> n4.4
         if (ret < 0) {
             /* Free the ctx - it isn't initialized properly at this point,
              * so avformat_close_input shouldn't be called. If

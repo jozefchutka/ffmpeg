@@ -3012,11 +3012,7 @@ static int matroska_read_header(AVFormatContext *s)
                 st->disposition         |= AV_DISPOSITION_ATTACHED_PIC;
                 st->codecpar->codec_type = AVMEDIA_TYPE_VIDEO;
 
-<<<<<<< HEAD
-                av_init_packet(pkt);
-=======
                 av_packet_unref(pkt);
->>>>>>> n4.4
                 pkt->buf          = attachments[j].bin.buf;
                 attachments[j].bin.buf = NULL;
                 pkt->data         = attachments[j].bin.data;

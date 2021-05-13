@@ -2142,12 +2142,8 @@ static int mkv_write_vtt_blocks(AVFormatContext *s, AVIOContext *pb, const AVPac
     MatroskaMuxContext *mkv = s->priv_data;
     mkv_track *track = &mkv->tracks[pkt->stream_index];
     ebml_master blockgroup;
-<<<<<<< HEAD
-    int id_size, settings_size, size;
-=======
     buffer_size_t id_size, settings_size;
     int size;
->>>>>>> n4.4
     const char *id, *settings;
     int64_t ts = track->write_dts ? pkt->dts : pkt->pts;
     const int flags = 0;

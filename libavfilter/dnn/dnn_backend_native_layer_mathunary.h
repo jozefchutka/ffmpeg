@@ -53,14 +53,8 @@ typedef struct DnnLayerMathUnaryParams{
     DNNMathUnaryOperation un_op;
 } DnnLayerMathUnaryParams;
 
-<<<<<<< HEAD
-int dnn_load_layer_math_unary(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num);
-int dnn_execute_layer_math_unary(DnnOperand *operands, const int32_t *input_operand_indexes,
-                                int32_t output_operand_index, const void *parameters);
-=======
 int ff_dnn_load_layer_math_unary(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num);
 int ff_dnn_execute_layer_math_unary(DnnOperand *operands, const int32_t *input_operand_indexes,
                                     int32_t output_operand_index, const void *parameters, NativeContext *ctx);
->>>>>>> n4.4
 
 #endif

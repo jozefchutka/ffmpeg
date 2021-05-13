@@ -27,11 +27,7 @@
 #include "libavutil/avassert.h"
 #include "dnn_backend_native_layer_depth2space.h"
 
-<<<<<<< HEAD
-int dnn_load_layer_depth2space(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
-=======
 int ff_dnn_load_layer_depth2space(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
->>>>>>> n4.4
 {
     DepthToSpaceParams *params;
     int dnn_size = 0;
@@ -78,17 +74,11 @@ int ff_dnn_execute_layer_depth2space(DnnOperand *operands, const int32_t *input_
     output_operand->dims[2] = width * block_size;
     output_operand->dims[3] = new_channels;
     output_operand->data_type = operands[input_operand_index].data_type;
-<<<<<<< HEAD
-    output_operand->length = calculate_operand_data_length(output_operand);
-    if (output_operand->length <= 0)
-        return -1;
-=======
     output_operand->length = ff_calculate_operand_data_length(output_operand);
     if (output_operand->length <= 0) {
         av_log(ctx, AV_LOG_ERROR, "The output data length overflow\n");
         return DNN_ERROR;
     }
->>>>>>> n4.4
     output_operand->data = av_realloc(output_operand->data, output_operand->length);
     if (!output_operand->data) {
         av_log(ctx, AV_LOG_ERROR, "Failed to reallocate memory for output\n");

@@ -2339,11 +2339,7 @@ static int mxf_parse_h264_frame(AVFormatContext *s, AVStream *st,
         }
     }
 
-<<<<<<< HEAD
-    if (!sc->codec_ul) {
-=======
     if (!codec_ul) {
->>>>>>> n4.4
         av_log(s, AV_LOG_ERROR, "h264 profile not supported\n");
         return 0;
     }

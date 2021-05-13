@@ -367,63 +367,7 @@ static int h264_metadata_handle_display_orientation(AVBSFContext *bsf,
                                        SEI_TYPE_DISPLAY_ORIENTATION);
     }
 
-<<<<<<< HEAD
-    if (ctx->display_orientation != PASS) {
-        for (i = au->nb_units - 1; i >= 0; i--) {
-            H264RawSEI *sei;
-            if (au->units[i].type != H264_NAL_SEI)
-                continue;
-            sei = au->units[i].content;
-
-            for (j = sei->payload_count - 1; j >= 0; j--) {
-                H264RawSEIDisplayOrientation *disp;
-                int32_t *matrix;
-
-                if (sei->payload[j].payload_type !=
-                    H264_SEI_TYPE_DISPLAY_ORIENTATION)
-                    continue;
-                disp = &sei->payload[j].payload.display_orientation;
-
-                if (ctx->display_orientation == REMOVE ||
-                    ctx->display_orientation == INSERT) {
-                    ff_cbs_h264_delete_sei_message(ctx->cbc, au,
-                                                   &au->units[i], j);
-                    continue;
-                }
-
-                matrix = av_malloc(9 * sizeof(int32_t));
-                if (!matrix) {
-                    err = AVERROR(ENOMEM);
-                    goto fail;
-                }
-
-                av_display_rotation_set(matrix,
-                                        disp->anticlockwise_rotation *
-                                        180.0 / 65536.0);
-                av_display_matrix_flip(matrix, disp->hor_flip, disp->ver_flip);
-
-                // If there are multiple display orientation messages in an
-                // access unit, then the last one added to the packet (i.e.
-                // the first one in the access unit) will prevail.
-                err = av_packet_add_side_data(pkt, AV_PKT_DATA_DISPLAYMATRIX,
-                                              (uint8_t*)matrix,
-                                              9 * sizeof(int32_t));
-                if (err < 0) {
-                    av_log(bsf, AV_LOG_ERROR, "Failed to attach extracted "
-                           "displaymatrix side data to packet.\n");
-                    av_free(matrix);
-                    goto fail;
-                }
-            }
-        }
-    }
-    if (ctx->display_orientation == INSERT) {
-        H264RawSEIPayload payload = {
-            .payload_type = H264_SEI_TYPE_DISPLAY_ORIENTATION,
-        };
-=======
     if (ctx->display_orientation == BSF_ELEMENT_INSERT) {
->>>>>>> n4.4
         H264RawSEIDisplayOrientation *disp =
             &ctx->display_orientation_payload;
         uint8_t *data;

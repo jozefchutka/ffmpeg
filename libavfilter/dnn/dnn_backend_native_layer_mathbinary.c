@@ -27,9 +27,6 @@
 #include "libavutil/avassert.h"
 #include "dnn_backend_native_layer_mathbinary.h"
 
-<<<<<<< HEAD
-int dnn_load_layer_math_binary(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
-=======
 typedef float (*FunType)(float src0, float src1);
 
 static float sub(float src0, float src1)
@@ -102,7 +99,6 @@ static void math_binary_not_commutative(FunType pfun, const DnnLayerMathBinaryPa
     }
 }
 int ff_dnn_load_layer_math_binary(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
->>>>>>> n4.4
 {
     DnnLayerMathBinaryParams params = { 0 };
     int dnn_size = 0;
@@ -165,17 +161,11 @@ int ff_dnn_execute_layer_math_binary(DnnOperand *operands, const int32_t *input_
         output->dims[i] = input->dims[i];
 
     output->data_type = input->data_type;
-<<<<<<< HEAD
-    output->length = calculate_operand_data_length(output);
-    if (output->length <= 0)
-        return DNN_ERROR;
-=======
     output->length = ff_calculate_operand_data_length(output);
     if (output->length <= 0) {
         av_log(ctx, AV_LOG_ERROR, "The output data length overflow\n");
         return DNN_ERROR;
     }
->>>>>>> n4.4
     output->data = av_realloc(output->data, output->length);
     if (!output->data) {
         av_log(ctx, AV_LOG_ERROR, "Failed to reallocate memory for output\n");

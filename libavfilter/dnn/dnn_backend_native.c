@@ -90,18 +90,9 @@ static DNNReturnType get_output_native(void *model, const char *input_name, int 
 
     out_frame = av_frame_alloc();
 
-<<<<<<< HEAD
-    av_freep(&oprd->data);
-    oprd->length = calculate_operand_data_length(oprd);
-    if (oprd->length <= 0)
-        return DNN_ERROR;
-    oprd->data = av_malloc(oprd->length);
-    if (!oprd->data)
-=======
     if (!out_frame) {
         av_log(ctx, AV_LOG_ERROR, "Could not allocate memory for output frame\n");
         av_frame_free(&in_frame);
->>>>>>> n4.4
         return DNN_ERROR;
     }
 
@@ -147,27 +138,10 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
     /**
      * check file header with string and version
      */
-<<<<<<< HEAD
-    size = sizeof(header_expected);
-    buf = av_malloc(size);
-    if (!buf) {
-        goto fail;
-    }
-
-    // size - 1 to skip the ending '\0' which is not saved in file
-    avio_get_str(model_file_context, size - 1, buf, size);
-    dnn_size = size - 1;
-    if (strncmp(buf, header_expected, size) != 0) {
-        av_freep(&buf);
-        goto fail;
-    }
-    av_freep(&buf);
-=======
     if (avio_read(model_file_context, buf, sizeof(buf)) != sizeof(buf) ||
         memcmp(buf, DNN_NATIVE_MAGIC, sizeof(buf)))
         goto fail;
     dnn_size = sizeof(buf);
->>>>>>> n4.4
 
     version = (int32_t)avio_rl32(model_file_context);
     dnn_size += 4;
@@ -180,11 +154,6 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
     dnn_size += 4;
     header_size = dnn_size;
 
-<<<<<<< HEAD
-    network = av_mallocz(sizeof(ConvolutionalNetwork));
-    if (!network){
-        goto fail;
-=======
     native_model = av_mallocz(sizeof(NativeModel));
     if (!native_model){
         goto fail;
@@ -201,7 +170,6 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
     if (native_model->ctx.options.conv2d_threads > 1){
         av_log(&native_model->ctx, AV_LOG_WARNING, "'conv2d_threads' option was set but it is not supported "
                        "on this build (pthread support is required)\n");
->>>>>>> n4.4
     }
 #endif
 
@@ -211,15 +179,6 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
     dnn_size += 8;
     avio_seek(model_file_context, header_size, SEEK_SET);
 
-<<<<<<< HEAD
-    network->layers = av_mallocz(network->layers_num * sizeof(Layer));
-    if (!network->layers){
-        goto fail;
-    }
-
-    network->operands = av_mallocz(network->operands_num * sizeof(DnnOperand));
-    if (!network->operands){
-=======
     native_model->layers = av_mallocz(native_model->layers_num * sizeof(Layer));
     if (!native_model->layers){
         goto fail;
@@ -227,7 +186,6 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
 
     native_model->operands = av_mallocz(native_model->operands_num * sizeof(DnnOperand));
     if (!native_model->operands){
->>>>>>> n4.4
         goto fail;
     }
 
@@ -239,13 +197,8 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
             goto fail;
         }
 
-<<<<<<< HEAD
-        network->layers[layer].type = layer_type;
-        parsed_size = layer_funcs[layer_type].pf_load(&network->layers[layer], model_file_context, file_size, network->operands_num);
-=======
         native_model->layers[layer].type = layer_type;
         parsed_size = ff_layer_funcs[layer_type].pf_load(&native_model->layers[layer], model_file_context, file_size, native_model->operands_num);
->>>>>>> n4.4
         if (!parsed_size) {
             goto fail;
         }
@@ -258,19 +211,11 @@ DNNModel *ff_dnn_load_model_native(const char *model_filename, DNNFunctionType f
         int32_t operand_index = (int32_t)avio_rl32(model_file_context);
         dnn_size += 4;
 
-<<<<<<< HEAD
-        if (operand_index >= network->operands_num) {
-            goto fail;
-        }
-
-        oprd = &network->operands[operand_index];
-=======
         if (operand_index >= native_model->operands_num) {
             goto fail;
         }
 
         oprd = &native_model->operands[operand_index];
->>>>>>> n4.4
         name_len = (int32_t)avio_rl32(model_file_context);
         dnn_size += 4;
 
@@ -476,29 +421,6 @@ void ff_dnn_free_model_native(DNNModel **model)
     if (*model)
     {
         if ((*model)->model) {
-<<<<<<< HEAD
-            network = (ConvolutionalNetwork *)(*model)->model;
-            if (network->layers) {
-                for (layer = 0; layer < network->layers_num; ++layer){
-                    if (network->layers[layer].type == DLT_CONV2D){
-                        conv_params = (ConvolutionalParams *)network->layers[layer].params;
-                        av_freep(&conv_params->kernel);
-                        av_freep(&conv_params->biases);
-                    }
-                    av_freep(&network->layers[layer].params);
-                }
-                av_freep(&network->layers);
-            }
-
-            if (network->operands) {
-                for (uint32_t operand = 0; operand < network->operands_num; ++operand)
-                    av_freep(&network->operands[operand].data);
-                av_freep(&network->operands);
-            }
-
-            av_freep(&network->output_indexes);
-            av_freep(&network);
-=======
             native_model = (*model)->model;
             if (native_model->layers) {
                 for (layer = 0; layer < native_model->layers_num; ++layer){
@@ -519,7 +441,6 @@ void ff_dnn_free_model_native(DNNModel **model)
             }
 
             av_freep(&native_model);
->>>>>>> n4.4
         }
         av_freep(model);
     }

@@ -25,9 +25,6 @@
 
 #define CLAMP_TO_EDGE(x, w) ((x) < 0 ? 0 : ((x) >= (w) ? (w - 1) : (x)))
 
-<<<<<<< HEAD
-int dnn_load_layer_conv2d(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
-=======
 //struct to pass parameters
 typedef struct ThreadCommonParam{
     DnnOperand *operands;
@@ -47,7 +44,6 @@ typedef struct ThreadParam{
 } ThreadParam;
 
 int ff_dnn_load_layer_conv2d(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
->>>>>>> n4.4
 {
     ConvolutionalParams *conv_params;
     int kernel_size;
@@ -131,24 +127,8 @@ static void * dnn_execute_layer_conv2d_thread(void *threadarg)
     int filter_size = conv_params->kernel_size * filter_linesize;
     int pad_size = (conv_params->padding_method == VALID) ? (conv_params->kernel_size - 1) / 2 * conv_params->dilation : 0;
 
-<<<<<<< HEAD
-    DnnOperand *output_operand = &operands[output_operand_index];
-    output_operand->dims[0] = number;
-    output_operand->dims[1] = height - pad_size * 2;
-    output_operand->dims[2] = width - pad_size * 2;
-    output_operand->dims[3] = conv_params->output_num;
-    output_operand->data_type = operands[input_operand_index].data_type;
-    output_operand->length = calculate_operand_data_length(output_operand);
-    if (output_operand->length <= 0)
-        return -1;
-    output_operand->data = av_realloc(output_operand->data, output_operand->length);
-    if (!output_operand->data)
-        return -1;
-    output = output_operand->data;
-=======
     float *output = thread_common_param->output_data;
     output += (conv_params->output_num) * (width - 2 * pad_size) * (thread_param->thread_start - pad_size);
->>>>>>> n4.4
 
     av_assert0(channel == conv_params->input_num);
 

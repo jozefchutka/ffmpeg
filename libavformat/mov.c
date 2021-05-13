@@ -2363,12 +2363,8 @@ FF_ENABLE_DEPRECATION_WARNINGS
                 uint32_t format = AV_RB32(st->codecpar->extradata + 22);
                 if (format == AV_RB32("name") && (int64_t)size >= (int64_t)len + 18) {
                     uint16_t str_size = AV_RB16(st->codecpar->extradata + 26); /* string length */
-<<<<<<< HEAD
-                    if (str_size > 0 && size >= (int)str_size + 30) {
-=======
                     if (str_size > 0 && size >= (int)str_size + 30 &&
                         st->codecpar->extradata[30] /* Don't add empty string */) {
->>>>>>> n4.4
                         char *reel_name = av_malloc(str_size + 1);
                         if (!reel_name)
                             return AVERROR(ENOMEM);
@@ -7019,11 +7015,8 @@ static int mov_read_default(MOVContext *c, AVIOContext *pb, MOVAtom atom)
                 uint32_t type;
                 avio_skip(pb, 4);
                 type = avio_rl32(pb);
-<<<<<<< HEAD
-=======
                 if (avio_feof(pb))
                     break;
->>>>>>> n4.4
                 avio_seek(pb, -8, SEEK_CUR);
                 if (type == MKTAG('m','v','h','d') ||
                     type == MKTAG('c','m','o','v')) {
@@ -7749,14 +7742,8 @@ static int mov_read_header(AVFormatContext *s)
         switch (st->codecpar->codec_type) {
         case AVMEDIA_TYPE_AUDIO:
             err = ff_replaygain_export(st, s->metadata);
-<<<<<<< HEAD
-            if (err < 0) {
-                goto fail;
-            }
-=======
             if (err < 0)
                 goto fail;
->>>>>>> n4.4
             break;
         case AVMEDIA_TYPE_VIDEO:
             if (sc->display_matrix) {

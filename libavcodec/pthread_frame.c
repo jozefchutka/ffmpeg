@@ -924,80 +924,12 @@ int ff_frame_thread_init(AVCodecContext *avctx)
 
     if (codec->type == AVMEDIA_TYPE_VIDEO)
         avctx->delay = src->thread_count - 1;
-<<<<<<< HEAD
-
-    for (i = 0; i < thread_count; i++) {
-        AVCodecContext *copy = av_malloc(sizeof(AVCodecContext));
-        PerThreadContext *p  = &fctx->threads[i];
-
-        pthread_mutex_init(&p->mutex, NULL);
-        pthread_mutex_init(&p->progress_mutex, NULL);
-        pthread_cond_init(&p->input_cond, NULL);
-        pthread_cond_init(&p->progress_cond, NULL);
-        pthread_cond_init(&p->output_cond, NULL);
-
-        p->frame = av_frame_alloc();
-        if (!p->frame) {
-            av_freep(&copy);
-            err = AVERROR(ENOMEM);
-            goto error;
-        }
-
-        p->parent = fctx;
-        p->avctx  = copy;
-
-        if (!copy) {
-            err = AVERROR(ENOMEM);
-            goto error;
-        }
-
-        *copy = *src;
-
-        copy->internal = av_malloc(sizeof(AVCodecInternal));
-        if (!copy->internal) {
-            copy->priv_data = NULL;
-            err = AVERROR(ENOMEM);
-            goto error;
-        }
-        *copy->internal = *src->internal;
-        copy->internal->thread_ctx = p;
-        copy->internal->last_pkt_props = &p->avpkt;
-
-        copy->delay = avctx->delay;
-
-        if (codec->priv_data_size) {
-            copy->priv_data = av_mallocz(codec->priv_data_size);
-            if (!copy->priv_data) {
-                err = AVERROR(ENOMEM);
-                goto error;
-            }
-
-            if (codec->priv_class) {
-                *(const AVClass **)copy->priv_data = codec->priv_class;
-                err = av_opt_copy(copy->priv_data, src->priv_data);
-                if (err < 0)
-                    goto error;
-            }
-        }
-
-        if (i)
-            copy->internal->is_copy = 1;
-
-        if (codec->init)
-            err = codec->init(copy);
-
-        if (err) goto error;
-
-        if (!i)
-            update_context_from_thread(avctx, copy, 1);
-=======
 
     fctx->threads = av_mallocz_array(thread_count, sizeof(PerThreadContext));
     if (!fctx->threads) {
         err = AVERROR(ENOMEM);
         goto error;
     }
->>>>>>> n4.4
 
     for (; i < thread_count; ) {
         PerThreadContext *p  = &fctx->threads[i];

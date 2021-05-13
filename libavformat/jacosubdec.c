@@ -199,10 +199,7 @@ static int jacosub_read_header(AVFormatContext *s)
 
             sub = ff_subtitles_queue_insert(&jacosub->q, line, len, merge_line);
             if (!sub) {
-<<<<<<< HEAD
-=======
                 av_bprint_finalize(&header, NULL);
->>>>>>> n4.4
                 ret = AVERROR(ENOMEM);
                 goto fail;
             }

@@ -27,11 +27,7 @@
 #include "libavutil/avassert.h"
 #include "dnn_backend_native_layer_maximum.h"
 
-<<<<<<< HEAD
-int dnn_load_layer_maximum(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
-=======
 int ff_dnn_load_layer_maximum(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num)
->>>>>>> n4.4
 {
     DnnLayerMaximumParams *params;
     int dnn_size = 0;
@@ -67,17 +63,11 @@ int ff_dnn_execute_layer_maximum(DnnOperand *operands, const int32_t *input_oper
         output->dims[i] = input->dims[i];
 
     output->data_type = input->data_type;
-<<<<<<< HEAD
-    output->length = calculate_operand_data_length(output);
-    if (output->length <= 0)
-        return DNN_ERROR;
-=======
     output->length = ff_calculate_operand_data_length(output);
     if (output->length <= 0) {
         av_log(ctx, AV_LOG_ERROR, "The output data length overflow\n");
         return DNN_ERROR;
     }
->>>>>>> n4.4
     output->data = av_realloc(output->data, output->length);
     if (!output->data) {
         av_log(ctx, AV_LOG_ERROR, "Failed to reallocate memory for output\n");

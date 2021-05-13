@@ -81,21 +81,6 @@ int ff_url_join(char *str, int size, const char *proto,
 
 static const char *find_delim(const char *delim, const char *cur, const char *end)
 {
-<<<<<<< HEAD
-    const char *p = rel;
-    const char *root = rel;
-    char tmp_path[MAX_URL_SIZE] = {0, };
-    char *sep;
-    char *node;
-
-    /* Get the path root of the url which start by "://" */
-    if (p && (sep = strstr(p, "://"))) {
-        sep += 3;
-        root = strchr(sep, '/');
-        if (!root)
-            return;
-    }
-=======
     while (cur < end && !strchr(delim, *cur))
         cur++;
     return cur;
@@ -109,7 +94,6 @@ int ff_url_decompose(URLComponents *uc, const char *url, const char *end)
     if (!end)
         end = url + strlen(url);
     cur = uc->url = url;
->>>>>>> n4.4
 
     /* scheme */
     uc->scheme = cur;
@@ -200,37 +184,7 @@ static int append_path(char *root, char *out_end, char **rout,
             memmove(out, in, next - in);
             out += next - in;
         }
-<<<<<<< HEAD
-        av_strlcat(buf, rel, size);
-        trim_double_dot_url(tmp_path, buf, size);
-        memset(buf, 0, size);
-        av_strlcpy(buf, tmp_path, size);
-        return;
-    }
-    /* If rel actually is an absolute url, just copy it */
-    if (!base || strstr(rel, "://") || rel[0] == '/') {
-        memset(buf, 0, size);
-        trim_double_dot_url(buf, rel, size);
-        return;
-    }
-    if (base != buf)
-        av_strlcpy(buf, base, size);
-
-    /* Strip off any query string from base */
-    path_query = strchr(buf, '?');
-    if (path_query)
-        *path_query = '\0';
-
-    /* Is relative path just a new query part? */
-    if (rel[0] == '?') {
-        av_strlcat(buf, rel, size);
-        trim_double_dot_url(tmp_path, buf, size);
-        memset(buf, 0, size);
-        av_strlcpy(buf, tmp_path, size);
-        return;
-=======
         in = next;
->>>>>>> n4.4
     }
     *rout = out;
     return 0;
@@ -253,17 +207,6 @@ int ff_make_absolute_url2(char *buf, int size, const char *base,
        because dir could be a symlink, and .. points to
        the actual parent of the target directory.
 
-<<<<<<< HEAD
-    root = p = buf;
-    /* Get the path root of the url which start by "://" */
-    if (p && strstr(p, "://")) {
-        sep = strstr(p, "://");
-        if (sep) {
-            sep += 3;
-            root = strchr(sep, '/');
-            if (!root)
-                return;
-=======
        We'll consider that URLs with an actual scheme and authority,
        i.e. starting with scheme://, need parent dir simplification,
        while bare paths or pseudo-URLs starting with proto: without
@@ -288,7 +231,6 @@ int ff_make_absolute_url2(char *buf, int size, const char *base,
             base_separators = "/\\";
             if (is_fq_dos_path(rel))
                 base = "";
->>>>>>> n4.4
         }
     }
     if ((ret = ff_url_decompose(&ub, base, NULL)) < 0 ||
