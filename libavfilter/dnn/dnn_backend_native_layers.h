@@ -25,7 +25,11 @@
 #include "dnn_backend_native.h"
 
 typedef int (*LAYER_EXEC_FUNC)(DnnOperand *operands, const int32_t *input_operand_indexes,
+<<<<<<< HEAD
                                int32_t output_operand_index, const void *parameters);
+=======
+                               int32_t output_operand_index, const void *parameters, NativeContext *ctx);
+>>>>>>> n4.4
 typedef int (*LAYER_LOAD_FUNC)(Layer *layer, AVIOContext *model_file_context, int file_size, int operands_num);
 
 typedef struct LayerFunc {
@@ -33,6 +37,6 @@ typedef struct LayerFunc {
     LAYER_LOAD_FUNC pf_load;
 }LayerFunc;
 
-extern LayerFunc layer_funcs[DLT_COUNT];
+extern const LayerFunc ff_layer_funcs[DLT_COUNT];
 
 #endif

@@ -181,6 +181,7 @@ static int str_to_time(const char *str, int64_t *rtime)
     char *end;
     int hours, minutes;
     double seconds = 0;
+    int64_t ts = 0;
 
     if (*cur < '0' || *cur > '9')
         return 0;
@@ -196,8 +197,9 @@ static int str_to_time(const char *str, int64_t *rtime)
         seconds = strtod(cur + 1, &end);
         if (end > cur + 1)
             cur = end;
+        ts = av_clipd(seconds * AV_TIME_BASE, INT64_MIN/2, INT64_MAX/2);
     }
-    *rtime = (hours * 3600LL + minutes * 60LL + seconds) * AV_TIME_BASE;
+    *rtime = av_sat_add64((hours * 3600LL + minutes * 60LL) * AV_TIME_BASE, ts);
     return cur - str;
 }
 
@@ -474,6 +476,8 @@ static int parse_timestamp(struct sbg_parser *p,
     while (lex_char(p, '+')) {
         if (!lex_time(p, &dt))
             return AVERROR_INVALIDDATA;
+        if (av_sat_add64(rel, dt) - dt != rel)
+            return AVERROR_INVALIDDATA;
         rel += dt;
         r = 1;
     }
@@ -536,6 +540,9 @@ static int parse_time_sequence(struct sbg_parser *p, int inblock)
         return AVERROR_INVALIDDATA;
     }
     ts.type = p->current_time.type;
+
+    if (av_sat_add64(p->current_time.t, rel_ts) != p->current_time.t + (uint64_t)rel_ts)
+        return AVERROR_INVALIDDATA;
     ts.t    = p->current_time.t + rel_ts;
     r = parse_fade(p, &fade);
     if (r < 0)
@@ -884,7 +891,7 @@ fail:
     return size;
 }
 
-static void expand_timestamps(void *log, struct sbg_script *s)
+static int expand_timestamps(void *log, struct sbg_script *s)
 {
     int i, nb_rel = 0;
     int64_t now, cur_ts, delta = 0;
@@ -932,10 +939,13 @@ static void expand_timestamps(void *log, struct sbg_script *s)
                 AV_NOPTS_VALUE; /* may be overridden later by -E option */
     cur_ts = now;
     for (i = 0; i < s->nb_tseq; i++) {
+        if (av_sat_add64(s->tseq[i].ts.t, delta) != s->tseq[i].ts.t + (uint64_t)delta)
+            return AVERROR_INVALIDDATA;
         if (s->tseq[i].ts.t + delta < cur_ts)
             delta += DAY_TS;
         cur_ts = s->tseq[i].ts.t += delta;
     }
+    return 0;
 }
 
 static int expand_tseq(void *log, struct sbg_script *s, int *nb_ev_max,
@@ -988,7 +998,9 @@ static int expand_script(void *log, struct sbg_script *s)
 {
     int i, r, nb_events_max = 0;
 
-    expand_timestamps(log, s);
+    r = expand_timestamps(log, s);
+    if (r < 0)
+        return r;
     for (i = 0; i < s->nb_tseq; i++) {
         r = expand_tseq(log, s, &nb_events_max, 0, &s->tseq[i]);
         if (r < 0)
@@ -1410,6 +1422,11 @@ static av_cold int sbg_read_header(AVFormatContext *avf)
     r = generate_intervals(avf, &script, sbg->sample_rate, &inter);
     if (r < 0)
         goto fail;
+
+    if (script.end_ts != AV_NOPTS_VALUE && script.end_ts < script.start_ts) {
+        r = AVERROR_INVALIDDATA;
+        goto fail;
+    }
 
     st = avformat_new_stream(avf, NULL);
     if (!st)
