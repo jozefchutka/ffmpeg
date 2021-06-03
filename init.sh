@@ -6,10 +6,12 @@ git clone git@github.com:jozefchutka/ffmpeg.wasm-core.git
 
 sudo -s
 cd ../emsdk
-./emsdk install 2.0.23
-./emsdk activate 2.0.23
+./emsdk install 2.0.8
+./emsdk activate 2.0.8
 source ./emsdk_env.sh
 
 cd ../ffmpeg.wasm-core
 git checkout yscene
 git submodule update --init --recursive
+
+./build.sh
