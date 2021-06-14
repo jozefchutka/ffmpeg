@@ -11,6 +11,7 @@ FLAGS=(
   -Wno-deprecated-declarations -Wno-pointer-sign -Wno-implicit-int-float-conversion -Wno-switch -Wno-parentheses -Qunused-arguments
   -lavdevice -lavfilter -lavformat -lavcodec -lswresample -lswscale -lavutil -lpostproc -lm -lx264 -lx265 -lvpx -lwavpack -lmp3lame -lfdk-aac -lvorbis -lvorbisenc -lvorbisfile -logg -ltheora -ltheoraenc -ltheoradec -lz -lfreetype -lopus -lwebp -pthread
   fftools/ffmpeg_opt.c fftools/ffmpeg_filter.c fftools/ffmpeg_hw.c fftools/cmdutils.c fftools/ffmpeg.c
+  -lworkerfs.js
   -o wasm/dist/ffmpeg-core.js
   -s USE_SDL=2                                  # use SDL2
   -s USE_PTHREADS=1                             # enable pthreads support
@@ -24,6 +25,8 @@ FLAGS=(
   -s INITIAL_MEMORY=2146435072                  # 64 KB * 1024 * 16 * 2047 = 2146435072 bytes ~= 2 GB, 134217728 = 128 MB
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb
+  -s ENVIRONMENT=worker
+  -s BUILD_AS_WORKER=1
   --post-js wasm/post-js.js
   $OPTIM_FLAGS
 )

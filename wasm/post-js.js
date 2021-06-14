@@ -1,1 +1,1 @@
-Module["exit"] = exit;
+Module['WORKERFS']=WORKERFS;
