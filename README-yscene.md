@@ -4,8 +4,28 @@
 
 Build using google cloud console ([init.sh](https://github.com/jozefchutka/ffmpeg.wasm-core/blob/yscene/init.sh):
 
+### Init
+
 ```
-./init.sh
+git clone https://github.com/emscripten-core/emsdk.git
+
+git clone git@github.com:jozefchutka/ffmpeg.wasm-core.git
+cd /home/jozefchutka/ffmpeg.wasm-core
+git checkout yscene
+git submodule update --init --recursive
+```
+
+### Compile
+
+```
+sudo -s
+
+cd /home/jozefchutka/emsdk
+./emsdk install 2.0.24
+./emsdk activate 2.0.24
+source ./emsdk_env.sh
+
+cd /home/jozefchutka/ffmpeg.wasm-core
 ./build.sh
 ```
 

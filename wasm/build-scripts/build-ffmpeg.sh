@@ -17,7 +17,7 @@ FLAGS=(
   -s USE_PTHREADS=1                             # enable pthreads support
   -s PROXY_TO_PTHREAD=1                         # detach main() from browser/UI main thread
   -s INVOKE_RUN=0                               # not to run the main() in the beginning
-  -s EXIT_RUNTIME=1                             # exit runtime after execution
+  -s EXIT_RUNTIME=0                             # exit runtime after execution
   -s MODULARIZE=1                               # use modularized version to be more flexible
   -s EXPORT_NAME="createFFmpegCore"             # assign export name for browser
   -s EXPORTED_FUNCTIONS="[_main]"               # export main and proxy_main funcs
@@ -26,7 +26,6 @@ FLAGS=(
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb
   -s ENVIRONMENT=worker
-  -s BUILD_AS_WORKER=1
   --post-js wasm/post-js.js
   $OPTIM_FLAGS
 )
