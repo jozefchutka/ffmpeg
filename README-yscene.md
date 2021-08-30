@@ -38,8 +38,8 @@ git submodule update --init --recursive
 sudo -s
 
 cd /home/jozefchutka/emsdk
-./emsdk install 2.0.24
-./emsdk activate 2.0.24
+./emsdk install 2.0.29
+./emsdk activate 2.0.29
 source ./emsdk_env.sh
 
 cd /home/jozefchutka/ffmpeg.wasm-core
