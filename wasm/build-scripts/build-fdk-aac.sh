@@ -4,11 +4,11 @@ set -euo pipefail
 source $(dirname $0)/var.sh
 
 LIB_PATH=third_party/fdk-aac
-CFLAGS="-s USE_PTHREADS=1 $OPTIM_FLAGS"
 CONF_FLAGS=(
   --prefix=$BUILD_DIR                                 # install library in a build directory for FFmpeg to include
-  --host=i686-linux                                   # use i686 linux
+  --host=x86_64-linux
   --disable-shared                                    # disable shared library
+  --disable-dependency-tracking                       # speedup one-time build
 )
 echo "CONF_FLAGS=${CONF_FLAGS[@]}"
 (cd $LIB_PATH && \

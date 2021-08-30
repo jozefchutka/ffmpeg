@@ -37,7 +37,7 @@ Setup the emsdk from [HERE](https://emscripten.org/docs/getting_started/download
 $ bash build.sh
 ```
 
-If nothing goes wrong, you can find JavaScript files in `wasm/dist`.
+If nothing goes wrong, you can find JavaScript files in `wasm/packages/core/dist`.
 
 ## Test
 
@@ -79,8 +79,17 @@ $ npm test
 | vorbis | 1.3.6 | ogg format |
 | opus | 1.3.1 | opus format |
 
+#### Image
+
+| Library/Tool Name | Version | Remark |
+| ----------------- | ------- | ------ |
+| libwebp | 1.1.0 | webp format |
+
 #### Others
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
 | freetype2 | 2.10.4 | font file support |
+| fribidi | 1.0.10 | Arabic and Hebrew alphabets support |
+| harfbuzz | 2.7.4 | text shaping engine |
+| libass | 0.15.0 | SSA/ASS subtitles rendering library |

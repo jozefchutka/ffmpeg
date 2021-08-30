@@ -4,7 +4,6 @@ set -euo pipefail
 source $(dirname $0)/var.sh
 
 LIB_PATH=third_party/libwebp
-CXXFLAGS="-s USE_PTHREADS=1 $OPTIM_FLAGS"
 CM_FLAGS=(
   -DCMAKE_INSTALL_PREFIX=$BUILD_DIR
   -DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN_FILE
