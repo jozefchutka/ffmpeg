@@ -10,8 +10,10 @@
 6. create branch "new-yscene" based on origin/yscene, TRACKed!, switch
 7. pull latest into new-yscene
 8. merge from new-wasm into new-yscene (expected conflicts)
-9. TortoiseGit -> Git Commit -> new yscene
-10. resolve conflicts and push
+9. TortoiseGit -> Git Commit -> new-yscene
+10. resolve conflicts
+11. TortoiseGit -> Browser references / new-yscene -> Select Tracked Branch -> origin/new-yscene
+12. push new-yscene
 
 # Build
 
