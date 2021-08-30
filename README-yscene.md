@@ -1,3 +1,18 @@
+# Fetch & Merge
+
+## ffmpeg.wasm-core
+
+1. checkout yscene git
+2. TortoiseGit -> Git Sync...
+3. manage origins and add "wasm" origin
+4. create branch "new-wasm" based on wasm/n4.3.1-wasm, TRACKed!, switch
+5. pull latest into new-wasm
+6. create branch "new-yscene" based on origin/yscene, TRACKed!, switch
+7. pull latest into new-yscene
+8. merge from new-wasm into new-yscene (expected conflicts)
+9. TortoiseGit -> Git Commit -> new yscene
+10. resolve conflicts and push
+
 # Build
 
 ## Google Cloud
