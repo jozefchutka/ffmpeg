@@ -59,3 +59,6 @@ Emscripten part (from build.sh):
 | Google Cloud Shell | default (-O3) |             |             |  2 min |
 | Google Cloud Shell | default (-O0) |      12 min |       2 min |  7 min |
 
+# Adding rubberband
+
+1. `git submodule add https://github.com/breakfastquay/rubberband third_party/librubberband`
