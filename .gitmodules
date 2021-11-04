@@ -55,3 +55,9 @@
 [submodule "third_party/librubberband"]
 	path = third_party/librubberband
 	url = https://github.com/breakfastquay/rubberband
+[submodule "third_party/libsamplerate"]
+	path = third_party/libsamplerate
+	url = https://github.com/libsndfile/libsamplerate
+[submodule "third_party/libsndfile"]
+	path = third_party/libsndfile
+	url = https://github.com/libsndfile/libsndfile
