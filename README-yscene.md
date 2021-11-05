@@ -61,4 +61,11 @@ Emscripten part (from build.sh):
 
 # Adding rubberband
 
+Mor info in https://johnnn.tech/q/installing-rubberband-from-source-on-a-linux-cluster/
+
 1. `git submodule add https://github.com/breakfastquay/rubberband third_party/librubberband`
+2. `git submodule add https://github.com/libsndfile/libsamplerate third_party/libsamplerate`
+3. `git submodule add https://github.com/libsndfile/libsndfile third_party/libsndfile`
+4. `sudo apt install autogen`
+5. `sudo apt-get install -y ladspa-sdk`
+6. `sudo apt install vamp-plugin-sdk`
