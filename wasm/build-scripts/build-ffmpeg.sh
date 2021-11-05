@@ -35,9 +35,9 @@ FLAGS=(
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb
   -s ENVIRONMENT=worker
-  --post-js wasm/post-js.js
   --pre-js wasm/src/pre.js
   --post-js wasm/src/post.js
+  -msimd128
   $OPTIM_FLAGS
   ${EXTRA_FLAGS[@]}
 )

@@ -46,6 +46,8 @@ cd /home/jozefchutka/ffmpeg.wasm-core
 ./build.sh
 ```
 
+Artefacts appears in `/wasm/packages/core/dist`
+
 Emscripten part (from build.sh):
 
 ```
