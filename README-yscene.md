@@ -69,3 +69,10 @@ Mor info in https://johnnn.tech/q/installing-rubberband-from-source-on-a-linux-c
 4. `sudo apt install autogen`
 5. `sudo apt-get install -y ladspa-sdk`
 6. `sudo apt install vamp-plugin-sdk`
+
+# Git
+
+```
+git config --global user.email "jozefchutka@gmail.com"
+git config --global user.name "Jozef Chutka"
+```
