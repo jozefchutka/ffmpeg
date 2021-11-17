@@ -1,4 +1,4 @@
-# Fetch & Merge
+# Update
 
 ## ffmpeg.wasm-core
 
@@ -55,10 +55,9 @@ cd /home/jozefchutka/emsdk
 source ./emsdk_env.sh
 
 cd /home/jozefchutka/ffmpeg.wasm-core
+emmake make clean # only if needed
 ./build.sh
 ```
-
-Artefacts appears in `/wasm/packages/core/dist`
 
 Emscripten part (from build.sh):
 
@@ -67,9 +66,13 @@ Emscripten part (from build.sh):
 ./wasm/build-scripts/build-ffmpeg.sh
 ```
 
-| Machine            | Settings      | deps + libs | emconfigure | emcc   |
-| ------------------ | ------------- | ----------: | ----------: | -----: |
-| Google Cloud Shell | default (-O3) |      23 min |      10 min | 10 min |
-| Google Cloud Shell | default (-O3) |             |             |  2 min |
-| Google Cloud Shell | default (-O0) |      12 min |       2 min |  7 min |
+| Machine            | Version | Settings      | deps + libs | emconfigure | emcc   |
+| ------------------ | ------- | ------------- | ----------: | ----------: | -----: |
+| Google Cloud Shell | 4.4     | default (-O3) |      22 min |      13 min |  6 min |
+| Google Cloud Shell | 4.3?    | default (-O3) |      23 min |      10 min | 10 min |
+| Google Cloud Shell | 4.3?    | default (-O3) |             |             |  2 min |
+| Google Cloud Shell | 4.3?    | default (-O0) |      12 min |       2 min |  7 min |
 
+## Artefacts 
+
+Artefacts appears in `/wasm/packages/core/dist`
