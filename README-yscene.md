@@ -50,8 +50,9 @@ git submodule update --init --recursive
 sudo -s
 
 cd /home/jozefchutka/emsdk
-./emsdk install 2.0.29
-./emsdk activate 2.0.29
+git pull
+./emsdk install 2.0.34
+./emsdk activate 2.0.34
 source ./emsdk_env.sh
 
 cd /home/jozefchutka/ffmpeg.wasm-core
@@ -76,3 +77,9 @@ Emscripten part (from build.sh):
 ## Artefacts 
 
 Artefacts appears in `/wasm/packages/core/dist`
+
+# Issues
+
+## Git
+
+- _insufficient permission for adding an object to repository database_ : `sudo chmod -R a+rwX .` (more)[https://stackoverflow.com/questions/6448242/git-push-error-insufficient-permission-for-adding-an-object-to-repository-datab]
