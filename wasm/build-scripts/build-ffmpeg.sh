@@ -37,6 +37,7 @@ FLAGS=(
   -s ENVIRONMENT=worker
   --pre-js wasm/src/pre.js
   --post-js wasm/src/post.js
+  -msimd128
   $OPTIM_FLAGS
   ${EXTRA_FLAGS[@]}
 )
