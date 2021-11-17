@@ -15,13 +15,25 @@
 11. TortoiseGit -> Browser references / new-yscene -> Select Tracked Branch -> origin/new-yscene
 12. push new-yscene
 
+## ffmpeg
+
+1. checkout yscene git
+2. TortoiseGit -> Git Sync...
+3. manage origins and add "ffmpeg" origin (include tags), fetch remote branches (`git fetch -v --progress "ffmpeg"`)
+4. create branch "new-ffmpeg" based on remotes/ffmpeg/???, TRACKed!, switch
+5. pull latest into new-ffmpeg
+6. create branch "new-yscene" based on origin/yscene, TRACKed!, switch
+7. pull latest into new-yscene (`git pull --progress -v --no-rebase "origin" yscene`)
+8. merge from new-ffmpeg into new-yscene (expected conflicts) (`git merge new-ffmpeg
+`)
+9. TortoiseGit -> Git Commit -> new-yscene
+10. resolve conflicts
+11. TortoiseGit -> Browser references / new-yscene -> Select Tracked Branch -> origin/new-yscene
+12. push new-yscene
+
 # Build
 
-## Google Cloud
-
-Build using google cloud console ([init.sh](https://github.com/jozefchutka/ffmpeg.wasm-core/blob/yscene/init.sh):
-
-### Init
+## Init
 
 ```
 git clone https://github.com/emscripten-core/emsdk.git
@@ -32,7 +44,7 @@ git checkout yscene
 git submodule update --init --recursive
 ```
 
-### Compile
+## Compile
 
 ```
 sudo -s
