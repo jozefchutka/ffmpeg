@@ -25,7 +25,7 @@ FLAGS=(
   # --enable-libaom         # enable libaom
 )
 echo "FFMPEG_CONFIG_FLAGS=${FLAGS[@]}"
-# emconfigure ./configure "${FLAGS[@]}"
-emconfigure pkg-config --list-all
+emconfigure ./configure "${FLAGS[@]}"
+#emconfigure pkg-config --list-all
 
 

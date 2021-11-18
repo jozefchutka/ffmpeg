@@ -30,6 +30,7 @@ run-all() {
     build-fribidi
     build-harfbuzz
     build-libass
+    build-librubberband
     #build-aom # disabled as it is extremely slow
     configure-ffmpeg
     build-ffmpeg

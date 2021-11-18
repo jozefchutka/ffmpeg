@@ -49,6 +49,7 @@ git submodule update --init --recursive
 ```
 sudo -s
 
+apt-get install -y autogen
 cd /home/jozefchutka/emsdk
 git pull
 ./emsdk install 2.0.34
@@ -88,10 +89,16 @@ git config --global user.name "Jozef Chutka"
 ```
 
 - _insufficient permission for adding an object to repository database_ : `sudo chmod -R a+rwX .` (more)[https://stackoverflow.com/questions/6448242/git-push-error-insufficient-permission-for-adding-an-object-to-repository-datab]
+
 ## rubberband
 
-More info in https://johnnn.tech/q/installing-rubberband-from-source-on-a-linux-cluster/
+More info in https://stackoverflow.com/questions/68203929/installing-rubberband-from-source-on-a-linux-cluster
+https://stackoverflow.com/questions/44795258/ffmpeg-on-android-with-rubberband
 
 1. `git submodule add https://github.com/breakfastquay/rubberband third_party/librubberband`
 2. `git submodule add https://github.com/libsndfile/libsamplerate third_party/libsamplerate`
 3. `git submodule add https://github.com/libsndfile/libsndfile third_party/libsndfile`
+
+```
+./wasm/build-scripts/build-librubberband.sh 
+```
