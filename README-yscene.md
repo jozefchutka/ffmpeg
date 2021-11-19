@@ -41,7 +41,7 @@ git clone https://github.com/emscripten-core/emsdk.git
 git clone git@github.com:jozefchutka/ffmpeg.wasm-core.git
 cd /home/jozefchutka/ffmpeg.wasm-core
 git checkout yscene
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 ## Compile
@@ -49,6 +49,7 @@ git submodule update --init --recursive
 ```
 sudo -s
 
+apt-get install -y autogen
 cd /home/jozefchutka/emsdk
 git pull
 ./emsdk install 2.0.34
@@ -63,23 +64,33 @@ emmake make clean # only if needed
 Emscripten part (from build.sh):
 
 ```
+./wasm/build-scripts/build-librubberband.sh  # i.e.
 ./wasm/build-scripts/configure-ffmpeg.sh
 ./wasm/build-scripts/build-ffmpeg.sh
 ```
 
-| Machine            | Version | Settings      | deps + libs | emconfigure | emcc   |
-| ------------------ | ------- | ------------- | ----------: | ----------: | -----: |
-| Google Cloud Shell | 4.4     | default (-O3) |      22 min |      13 min |  6 min |
-| Google Cloud Shell | 4.3?    | default (-O3) |      23 min |      10 min | 10 min |
-| Google Cloud Shell | 4.3?    | default (-O3) |             |             |  2 min |
-| Google Cloud Shell | 4.3?    | default (-O0) |      12 min |       2 min |  7 min |
+| Machine            | Version        | Settings      | deps + libs | emconfigure | emcc   |
+| ------------------ | -------------- | ------------- | ----------: | ----------: | -----: |
+| Google Cloud Shell | 4.4 rubberband | default (-O3) |     ~30 min |      6? min |  3 min |
+| Google Cloud Shell | 4.4            | default (-O3) |      22 min |      13 min |  6 min |
+| Google Cloud Shell | 4.3?           | default (-O3) |      23 min |      10 min | 10 min |
+| Google Cloud Shell | 4.3?           | default (-O3) |             |             |  2 min |
+| Google Cloud Shell | 4.3?           | default (-O0) |      12 min |       2 min |  7 min |
 
 ## Artefacts 
 
+```
+mv wasm/packages/core/dist/* /home/jozefchutka/dist/yscene-ff.../
+```
 Artefacts appears in `/wasm/packages/core/dist`
 
 # Issues
 
 ## Git
+
+```
+git config --global user.email "jozefchutka@gmail.com"
+git config --global user.name "Jozef Chutka"
+```
 
 - _insufficient permission for adding an object to repository database_ : `sudo chmod -R a+rwX .` (more)[https://stackoverflow.com/questions/6448242/git-push-error-insufficient-permission-for-adding-an-object-to-repository-datab]

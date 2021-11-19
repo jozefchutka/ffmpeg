@@ -7,6 +7,7 @@ FLAGS=(
   "${FFMPEG_CONFIG_FLAGS_BASE[@]}"
   --enable-gpl            # required by x264
   --enable-nonfree        # required by fdk-aac
+  --enable-librubberband  # enable librubberband
   --enable-zlib           # enable zlib
   --enable-libx264        # enable x264
   --enable-libx265        # enable x265
