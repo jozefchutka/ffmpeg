@@ -26,7 +26,7 @@ TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmak
 
 # Flags for code optimization, focus on speed instead
 # of size
-OPTIM_FLAGS="-O0"
+OPTIM_FLAGS="-O3"
 
 #if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 #  # Use closure complier only in linux environment
@@ -37,7 +37,7 @@ OPTIM_FLAGS="-O0"
 # OPTIM_FLAGS=""
 
 CFLAGS_BASE="$OPTIM_FLAGS -I$BUILD_DIR/include"
-CFLAGS="$CFLAGS_BASE -s USE_PTHREADS=1 -s LLD_REPORT_UNDEFINED"
+CFLAGS="$CFLAGS_BASE -s USE_PTHREADS=1"
 
 if [[ "$FFMPEG_ST" == "yes" ]]; then
   CFLAGS="$CFLAGS_BASE"

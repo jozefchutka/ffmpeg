@@ -15,20 +15,19 @@ CONF_FLAGS=(
 )
 echo "CONF_FLAGS=${CONF_FLAGS[@]}"
 
-    #not used
-    #LIB_PATH1=third_party/libsamplerate
-    #(cd $LIB_PATH1 && \
-    #  emconfigure ./autogen.sh && \
-    #  CFLAGS=$CFLAGS emconfigure ./configure "${CONF_FLAGS[@]}")
-    #emmake make -C $LIB_PATH1 clean
-    #emmake make -C $LIB_PATH1 install
+LIB_PATH1=third_party/libsamplerate
+(cd $LIB_PATH1 && \
+  emconfigure ./autogen.sh && \
+  CFLAGS=$CFLAGS emconfigure ./configure "${CONF_FLAGS[@]}")
+emmake make -C $LIB_PATH1 clean
+emmake make -C $LIB_PATH1 install
 
 LIB_PATH2=third_party/libsndfile
-#(cd $LIB_PATH2 && \
-#  emconfigure ./autogen.sh && \
-#  CFLAGS=$CFLAGS emconfigure ./configure "${CONF_FLAGS[@]}")
-#emmake make -C $LIB_PATH2 clean
-#emmake make -C $LIB_PATH2 install
+(cd $LIB_PATH2 && \
+  emconfigure ./autogen.sh && \
+  CFLAGS=$CFLAGS emconfigure ./configure "${CONF_FLAGS[@]}")
+emmake make -C $LIB_PATH2 clean
+emmake make -C $LIB_PATH2 install
 
 LIB_PATH=third_party/librubberband
 export CPATH="${BUILD_DIR}/include"
@@ -41,8 +40,3 @@ sed -i -e 's,%PREFIX%,'"$BUILD_DIR"',g' $EM_PKG_CONFIG_PATH/rubberband.pc
 mkdir -p $BUILD_DIR/include/rubberband
 cp $LIB_PATH/rubberband/RubberBandStretcher.h $BUILD_DIR/include/rubberband/RubberBandStretcher.h
 cp $LIB_PATH/rubberband/rubberband-c.h $BUILD_DIR/include/rubberband/rubberband-c.h
-
-    #not needed
-    #echo "Requires: samplerate" >> $EM_PKG_CONFIG_PATH/rubberband.pc
-    #cp $BUILD_DIR/lib/libsamplerate.la $BUILD_DIR/lib/librubberband.la
-    #sed -i 's/libsamplerate/librubberband/g' $BUILD_DIR/lib/librubberband.la
