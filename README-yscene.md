@@ -81,7 +81,7 @@ Emscripten part (from build.sh):
 
 | Machine            | Version        | Settings      | deps + libs | emconfigure | emcc   |
 | ------------------ | -------------- | ------------- | ----------: | ----------: | -----: |
-| Google Cloud Shell | 4.4 light      | default (-O3) |       15:19 |      6? min |  3 min |
+| Google Cloud Shell | 4.4 light      | default (-O3) |      18 min |      10 min |  3 min |
 | Google Cloud Shell | 4.4 rubberband | default (-O3) |     ~30 min |      6? min |  3 min |
 | Google Cloud Shell | 4.4            | default (-O3) |      22 min |      13 min |  6 min |
 | Google Cloud Shell | 4.3?           | default (-O3) |      23 min |      10 min | 10 min |
