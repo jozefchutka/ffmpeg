@@ -78,6 +78,9 @@ Emscripten part (from build.sh):
 
 ## Artefacts 
 
+```
+mv wasm/packages/core/dist/* /home/jozefchutka/dist/yscene-ff.../
+```
 Artefacts appears in `/wasm/packages/core/dist`
 
 # Issues
