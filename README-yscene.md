@@ -41,7 +41,7 @@ git clone https://github.com/emscripten-core/emsdk.git
 git clone git@github.com:jozefchutka/ffmpeg.wasm-core.git
 cd /home/jozefchutka/ffmpeg.wasm-core
 git checkout yscene
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 ## Compile
@@ -69,12 +69,13 @@ Emscripten part (from build.sh):
 ./wasm/build-scripts/build-ffmpeg.sh
 ```
 
-| Machine            | Version | Settings      | deps + libs | emconfigure | emcc   |
-| ------------------ | ------- | ------------- | ----------: | ----------: | -----: |
-| Google Cloud Shell | 4.4     | default (-O3) |      22 min |      13 min |  6 min |
-| Google Cloud Shell | 4.3?    | default (-O3) |      23 min |      10 min | 10 min |
-| Google Cloud Shell | 4.3?    | default (-O3) |             |             |  2 min |
-| Google Cloud Shell | 4.3?    | default (-O0) |      12 min |       2 min |  7 min |
+| Machine            | Version        | Settings      | deps + libs | emconfigure | emcc   |
+| ------------------ | -------------- | ------------- | ----------: | ----------: | -----: |
+| Google Cloud Shell | 4.4 rubberband | default (-O3) |     ~30 min |      6? min |  3 min |
+| Google Cloud Shell | 4.4            | default (-O3) |      22 min |      13 min |  6 min |
+| Google Cloud Shell | 4.3?           | default (-O3) |      23 min |      10 min | 10 min |
+| Google Cloud Shell | 4.3?           | default (-O3) |             |             |  2 min |
+| Google Cloud Shell | 4.3?           | default (-O0) |      12 min |       2 min |  7 min |
 
 ## Artefacts 
 
