@@ -1,6 +1,6 @@
 [submodule "third_party/x264"]
 	path = third_party/x264
-  url = https://github.com/ffmpegwasm/x264.git
+	url = https://github.com/ffmpegwasm/x264.git
 [submodule "wasm/tests/data"]
 	path = wasm/tests/data
 	url = https://github.com/ffmpegwasm/testdata
@@ -49,14 +49,14 @@
 [submodule "third_party/harfbuzz"]
 	path = third_party/harfbuzz
 	url = https://github.com/harfbuzz/harfbuzz.git
-    branch = main
+	branch = main
 [submodule "third_party/libass"]
 	path = third_party/libass
 	url = https://github.com/libass/libass.git
 [submodule "third_party/librubberband"]
 	path = third_party/librubberband
 	url = https://github.com/jozefchutka/rubberband
-    branch = yscene
+	branch = yscene
 [submodule "third_party/libsamplerate"]
 	path = third_party/libsamplerate
 	url = https://github.com/libsndfile/libsamplerate
