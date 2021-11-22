@@ -105,15 +105,3 @@ git config --global user.name "Jozef Chutka"
 ```
 
 - _insufficient permission for adding an object to repository database_ : `sudo chmod -R a+rwX .` (more)[https://stackoverflow.com/questions/6448242/git-push-error-insufficient-permission-for-adding-an-object-to-repository-datab]
-
-
-fix WebP
-
-```
-rm -rf third_party/libwebp/
-rm -rf build/share/WebP/
-rm -rf build/libweb*
-rm -rf build/lib/libweb*
-rm -rf build/lib/pkgconfig/libweb*
-rm -rf build/include/webp/
-```

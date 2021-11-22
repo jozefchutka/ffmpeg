@@ -23,7 +23,8 @@
 	branch = yscene
 [submodule "third_party/libwebp"]
 	path = third_party/libwebp
-	url = https://github.com/ffmpegwasm/libwebp
+	url = https://github.com/jozefchutka/libwebp
+	branch = yscene
 [submodule "third_party/Ogg"]
 	path = third_party/Ogg
 	url = https://github.com/jozefchutka/ogg
