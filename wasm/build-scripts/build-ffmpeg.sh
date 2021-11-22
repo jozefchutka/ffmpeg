@@ -35,7 +35,6 @@ FLAGS=(
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb
   -s ENVIRONMENT=worker
-  -s LLD_REPORT_UNDEFINED
   --pre-js wasm/src/pre.js
   --post-js wasm/src/post.js
   -msimd128
