@@ -14,6 +14,7 @@ run-all() {
   SCRIPTS=(
     # install dependencies
     install-deps
+    build-zlib
     build-fdk-aac
     build-lame
     build-libvpx
@@ -25,7 +26,6 @@ run-all() {
     build-vorbis
     build-x264
     build-x265
-    build-zlib
     configure-ffmpeg
     build-ffmpeg
   )
