@@ -23,20 +23,24 @@
 	branch = yscene
 [submodule "third_party/libwebp"]
 	path = third_party/libwebp
-	url = https://github.com/ffmpegwasm/libwebp
+	url = https://github.com/jozefchutka/libwebp
+	branch = yscene
 [submodule "third_party/Ogg"]
 	path = third_party/Ogg
-	url = https://github.com/ffmpegwasm/Ogg
+	url = https://github.com/jozefchutka/ogg
+	branch = yscene
 [submodule "third_party/opus"]
 	path = third_party/opus
-	url = https://github.com/ffmpegwasm/opus
+	url = https://github.com/jozefchutka/opus
+	branch = yscene
 [submodule "third_party/rubberband"]
 	path = third_party/rubberband
 	url = https://github.com/jozefchutka/rubberband
 	branch = yscene
 [submodule "third_party/theora"]
 	path = third_party/theora
-	url = https://github.com/ffmpegwasm/theora
+	url = https://github.com/jozefchutka/theora
+	branch = yscene
 [submodule "third_party/vorbis"]
 	path = third_party/vorbis
 	url = https://github.com/jozefchutka/vorbis
@@ -51,4 +55,5 @@
 	branch = yscene
 [submodule "third_party/zlib"]
 	path = third_party/zlib
-	url = https://github.com/ffmpegwasm/zlib
+	url = https://github.com/jozefchutka/zlib
+	branch = yscene
