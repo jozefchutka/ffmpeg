@@ -1,47 +1,54 @@
-[submodule "third_party/x264"]
-	path = third_party/x264
-	url = https://github.com/ffmpegwasm/x264.git
 [submodule "wasm/tests/data"]
 	path = wasm/tests/data
 	url = https://github.com/ffmpegwasm/testdata
-[submodule "third_party/libvpx"]
-	path = third_party/libvpx
-	url = https://github.com/ffmpegwasm/libvpx
-[submodule "third_party/x265"]
-	path = third_party/x265
-	url = https://github.com/ffmpegwasm/x265
-[submodule "third_party/lame"]
-	path = third_party/lame
-	url = https://github.com/ffmpegwasm/lame
 [submodule "third_party/fdk-aac"]
 	path = third_party/fdk-aac
-	url = https://github.com/ffmpegwasm/fdk-aac
+	url = https://github.com/jozefchutka/fdk-aac
+	branch = yscene
+[submodule "third_party/lame"]
+	path = third_party/lame
+	url = https://github.com/jozefchutka/lame
+	branch = yscene
+[submodule "third_party/libsamplerate"]
+	path = third_party/libsamplerate
+	url = https://github.com/jozefchutka/libsamplerate
+	branch = yscene
+[submodule "third_party/libsndfile"]
+	path = third_party/libsndfile
+	url = https://github.com/jozefchutka/libsndfile
+	branch = yscene
+[submodule "third_party/libvpx"]
+	path = third_party/libvpx
+	url = https://github.com/jozefchutka/libvpx
+	branch = yscene
+[submodule "third_party/libwebp"]
+	path = third_party/libwebp
+	url = https://github.com/ffmpegwasm/libwebp
+[submodule "third_party/Ogg"]
+	path = third_party/Ogg
+	url = https://github.com/ffmpegwasm/Ogg
+[submodule "third_party/opus"]
+	path = third_party/opus
+	url = https://github.com/ffmpegwasm/opus
+[submodule "third_party/rubberband"]
+	path = third_party/rubberband
+	url = https://github.com/jozefchutka/rubberband
+	branch = yscene
+[submodule "third_party/theora"]
+	path = third_party/theora
+	url = https://github.com/ffmpegwasm/theora
 [submodule "third_party/vorbis"]
 	path = third_party/vorbis
 	url = https://github.com/jozefchutka/vorbis
 	branch = yscene
-[submodule "third_party/Ogg"]
-	path = third_party/Ogg
-	url = https://github.com/ffmpegwasm/Ogg
-[submodule "third_party/theora"]
-	path = third_party/theora
-	url = https://github.com/ffmpegwasm/theora
+[submodule "third_party/x264"]
+	path = third_party/x264
+	url = https://github.com/jozefchutka/x264
+	branch = yscene
+[submodule "third_party/x265"]
+	path = third_party/x265
+	url = https://github.com/jozefchutka/x265
+	branch = yscene
 [submodule "third_party/zlib"]
 	path = third_party/zlib
 	url = https://github.com/ffmpegwasm/zlib
-[submodule "third_party/opus"]
-	path = third_party/opus
-	url = https://github.com/ffmpegwasm/opus
-[submodule "third_party/libwebp"]
-	path = third_party/libwebp
-	url = https://github.com/ffmpegwasm/libwebp
-[submodule "third_party/librubberband"]
-	path = third_party/librubberband
-	url = https://github.com/jozefchutka/rubberband
-	branch = yscene
-[submodule "third_party/libsamplerate"]
-	path = third_party/libsamplerate
-	url = https://github.com/libsndfile/libsamplerate
-[submodule "third_party/libsndfile"]
-	path = third_party/libsndfile
-	url = https://github.com/libsndfile/libsndfile

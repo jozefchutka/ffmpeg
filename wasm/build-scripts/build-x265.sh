@@ -3,7 +3,7 @@
 set -euo pipefail
 source $(dirname $0)/var.sh
 
-LIB_PATH=third_party/x265/source
+LIB_PATH=third_party/x265
 BASE_FLAGS=(
   -DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN_FILE
   -DENABLE_LIBNUMA=OFF
@@ -33,7 +33,7 @@ FLAGS_MAIN=(
   -DLINKED_12BIT=ON
 )
 
-cd $LIB_PATH
+cd $LIB_PATH/source
 rm -rf build
 mkdir -p build
 cd build
@@ -68,10 +68,5 @@ END
 EOF
 emmake make install -j
 
-# BUG: In Github Actions, x265.pc is not generated,
-# so we need to copy one manually
-cp $ROOT_DIR/wasm/patches/x265.pc $BUILD_DIR/lib/pkgconfig
-cp x265.pc $BUILD_DIR/lib/pkgconfig || true
-cp x265.pc $ROOT_DIR/wasm/patches || true
-
+cp $LIB_PATH/x265.pc $BUILD_DIR/lib/pkgconfig
 cd $ROOT_DIR
