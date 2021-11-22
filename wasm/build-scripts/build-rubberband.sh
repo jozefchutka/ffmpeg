@@ -29,9 +29,10 @@ LIB_PATH2=third_party/libsndfile
 emmake make -C $LIB_PATH2 clean
 emmake make -C $LIB_PATH2 install
 
-LIB_PATH=third_party/librubberband
-export CPATH="${BUILD_DIR}/include"
-emmake make -C $LIB_PATH -f otherbuilds/Makefile.em clean distclean default
+LIB_PATH=third_party/rubberband
+(CPATH="${BUILD_DIR}/include" \
+  OPTFLAGS="${OPTIM_FLAGS} -DNDEBUG -ffast-math -ftree-vectorize" \
+  emmake make -C $LIB_PATH -f otherbuilds/Makefile.em clean distclean default)
 
 cp $LIB_PATH/lib/librubberband.a $BUILD_DIR/lib
 cp $LIB_PATH/rubberband.pc.in $EM_PKG_CONFIG_PATH/rubberband.pc
