@@ -10,9 +10,6 @@
 [submodule "third_party/x265"]
 	path = third_party/x265
 	url = https://github.com/ffmpegwasm/x265
-[submodule "third_party/WavPack"]
-	path = third_party/WavPack
-	url = https://github.com/ffmpegwasm/WavPack
 [submodule "third_party/lame"]
 	path = third_party/lame
 	url = https://github.com/ffmpegwasm/lame
@@ -21,38 +18,23 @@
 	url = https://github.com/ffmpegwasm/fdk-aac
 [submodule "third_party/vorbis"]
 	path = third_party/vorbis
-	url = https://github.com/ffmpegwasm/vorbis
+	url = https://github.com/jozefchutka/vorbis
+	branch = yscene
 [submodule "third_party/Ogg"]
 	path = third_party/Ogg
 	url = https://github.com/ffmpegwasm/Ogg
 [submodule "third_party/theora"]
 	path = third_party/theora
 	url = https://github.com/ffmpegwasm/theora
-[submodule "third_party/aom"]
-	path = third_party/aom
-	url = https://github.com/ffmpegwasm/aom
 [submodule "third_party/zlib"]
 	path = third_party/zlib
 	url = https://github.com/ffmpegwasm/zlib
-[submodule "third_party/freetype2"]
-	path = third_party/freetype2
-	url = https://github.com/ffmpegwasm/freetype2
 [submodule "third_party/opus"]
 	path = third_party/opus
 	url = https://github.com/ffmpegwasm/opus
 [submodule "third_party/libwebp"]
 	path = third_party/libwebp
 	url = https://github.com/ffmpegwasm/libwebp
-[submodule "third_party/fribidi"]
-	path = third_party/fribidi
-	url = https://github.com/fribidi/fribidi.git
-[submodule "third_party/harfbuzz"]
-	path = third_party/harfbuzz
-	url = https://github.com/harfbuzz/harfbuzz.git
-	branch = main
-[submodule "third_party/libass"]
-	path = third_party/libass
-	url = https://github.com/libass/libass.git
 [submodule "third_party/librubberband"]
 	path = third_party/librubberband
 	url = https://github.com/jozefchutka/rubberband

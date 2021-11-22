@@ -41,6 +41,17 @@ git clone https://github.com/emscripten-core/emsdk.git
 git clone git@github.com:jozefchutka/ffmpeg.wasm-core.git
 cd /home/jozefchutka/ffmpeg.wasm-core
 git checkout yscene
+```
+
+## Clean 
+
+```
+sudo -s
+cd /home/jozefchutka/ffmpeg.wasm-core
+emmake make clean
+rm -rf build
+rm -rf third_party
+git submodule sync --recursive
 git submodule update --init --recursive --remote
 ```
 
@@ -57,7 +68,6 @@ git pull
 source ./emsdk_env.sh
 
 cd /home/jozefchutka/ffmpeg.wasm-core
-emmake make clean # only if needed
 ./build.sh
 ```
 
@@ -71,6 +81,7 @@ Emscripten part (from build.sh):
 
 | Machine            | Version        | Settings      | deps + libs | emconfigure | emcc   |
 | ------------------ | -------------- | ------------- | ----------: | ----------: | -----: |
+| Google Cloud Shell | 4.4 light      | default (-O3) |      18 min |      10 min |  3 min |
 | Google Cloud Shell | 4.4 rubberband | default (-O3) |     ~30 min |      6? min |  3 min |
 | Google Cloud Shell | 4.4            | default (-O3) |      22 min |      13 min |  6 min |
 | Google Cloud Shell | 4.3?           | default (-O3) |      23 min |      10 min | 10 min |

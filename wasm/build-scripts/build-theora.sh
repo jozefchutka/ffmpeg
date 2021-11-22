@@ -17,8 +17,10 @@ CONF_FLAGS=(
   --disable-vorbistest                                # disable vorbis tests
   --disable-sdltest                                   # disable sdl tests
 )
+
 echo "CONF_FLAGS=${CONF_FLAGS[@]}"
 (cd $LIB_PATH && \
-  emconfigure ./autogen.sh "${CONF_FLAGS[@]}")
+  emconfigure ./autogen.sh && \
+  emconfigure ./configure "${CONF_FLAGS[@]}")
 emmake make -C $LIB_PATH clean
 emmake make -C $LIB_PATH install -j

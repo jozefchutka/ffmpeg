@@ -18,7 +18,6 @@ run-all() {
     build-x264
     build-x265
     build-libvpx
-    build-wavpack
     build-lame
     build-fdk-aac
     build-ogg
@@ -26,12 +25,7 @@ run-all() {
     build-theora
     build-opus
     build-libwebp
-    build-freetype2
-    build-fribidi
-    build-harfbuzz
-    build-libass
     build-librubberband
-    #build-aom # disabled as it is extremely slow
     configure-ffmpeg
     build-ffmpeg
   )
