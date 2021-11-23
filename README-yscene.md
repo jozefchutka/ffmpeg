@@ -74,7 +74,7 @@ cd /home/jozefchutka/ffmpeg.wasm-core
 Emscripten part (from build.sh):
 
 ```
-./wasm/build-scripts/build-librubberband.sh  # i.e.
+./wasm/build-scripts/build-rubberband.sh  # i.e.
 ./wasm/build-scripts/configure-ffmpeg.sh
 ./wasm/build-scripts/build-ffmpeg.sh
 ```

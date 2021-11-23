@@ -15,17 +15,17 @@ run-all() {
     # install dependencies
     install-deps
     build-zlib
+    build-fdk-aac
+    build-lame
+    build-libvpx
+    build-libwebp
+    build-ogg
+    build-opus
+    build-rubberband
+    build-theora
+    build-vorbis
     build-x264
     build-x265
-    build-libvpx
-    build-lame
-    build-fdk-aac
-    build-ogg
-    build-vorbis
-    build-theora
-    build-opus
-    build-libwebp
-    build-librubberband
     configure-ffmpeg
     build-ffmpeg
   )
