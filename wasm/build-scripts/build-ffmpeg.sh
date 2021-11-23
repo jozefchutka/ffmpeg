@@ -30,7 +30,7 @@ FLAGS=(
   -s MODULARIZE=1                               # use modularized version to be more flexible
   -s EXPORT_NAME="createFFmpegCore"             # assign export name for browser
   -s EXPORTED_FUNCTIONS="[_main]"               # export main and proxy_main funcs
-  -s EXTRA_EXPORTED_RUNTIME_METHODS="[FS, cwrap, ccall, setValue, writeAsciiToMemory]"   # export preamble funcs
+  -s EXPORTED_RUNTIME_METHODS="[FS, cwrap, ccall, setValue, writeAsciiToMemory]"   # export preamble funcs
   -s INITIAL_MEMORY=2146435072                  # 64 KB * 1024 * 16 * 2047 = 2146435072 bytes ~= 2 GB, 134217728 = 128 MB
   -s ALLOW_MEMORY_GROWTH=1
   -s MAXIMUM_MEMORY=4gb

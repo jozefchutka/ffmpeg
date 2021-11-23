@@ -1,6 +1,6 @@
 [submodule "wasm/tests/data"]
 	path = wasm/tests/data
-	url = https://github.com/ffmpegwasm/testdata
+	url = https://github.com/jozefchutka/yscene-test
 [submodule "third_party/fdk-aac"]
 	path = third_party/fdk-aac
 	url = https://github.com/jozefchutka/fdk-aac
