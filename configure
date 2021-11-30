@@ -7,6 +7,9 @@
 # Copyright (c) 2005-2008 Mans Rullgard
 #
 
+# Set PKG_CONFIG_PATH manually
+export PKG_CONFIG_PATH=$PWD/build/lib/pkgconfig
+
 # Prevent locale nonsense from breaking basic text processing.
 LC_ALL=C
 export LC_ALL
