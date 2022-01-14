@@ -130,6 +130,19 @@ void exit_program(int ret)
     if (program_exit)
         program_exit(ret);
 
+    /*
+     * Print an unique message here to detect end of operation in JavaScript.
+     * 
+     * This is indeed crucial for the stability, for rather strange reason to me.
+     * It might not appear at first, but compiling i.e. PerformanceOutput1 project,
+     * while using module.onExit() does crash Chrome right after (or few seconds)
+     * after the compilation is completed:
+     *     `Error code: STATUS_ACCESS_VIOLATION`
+     * 
+     * Waiting for FFMPEG_END seems stable.
+     */
+    printf("FFMPEG_END\n");
+
     exit(ret);
 }
 
