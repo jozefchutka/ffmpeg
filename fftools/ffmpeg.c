@@ -4951,26 +4951,11 @@ static void log_callback_null(void *ptr, int level, const char *fmt, va_list vl)
 {
 }
 
-static void init_variables() {
-  input_streams     = NULL;
-  nb_input_streams  = 0;
-  input_files       = NULL;
-  nb_input_files    = 0;
-  output_streams    = NULL;
-  nb_output_streams = 0;
-  output_files      = NULL;
-  nb_output_files   = 0;
-  filtergraphs      = NULL;
-  nb_filtergraphs   = 0;
-  ffmpeg_exited     = 0;
-}
-
 int main(int argc, char **argv)
 {
     int i, ret;
     BenchmarkTimeStamps ti;
 
-    init_variables();
     init_dynload();
 
     register_exit(ffmpeg_cleanup);
