@@ -42,8 +42,6 @@
 #include "formats.h"
 #include "internal.h"
 
-#define MAX_CHANNELS 63
-
 #define ABS_THRES    -70            ///< silence gate: we discard anything below this absolute (LUFS) threshold
 #define ABS_UP_THRES  10            ///< upper loud limit to consider (ABS_THRES being the minimum)
 #define HIST_GRAIN   100            ///< defines histogram precision
@@ -57,16 +55,16 @@
  * infinitely over the time and is thus more scalable.
  */
 struct hist_entry {
-    int count;                      ///< how many times the corresponding value occurred
+    unsigned count;                 ///< how many times the corresponding value occurred
     double energy;                  ///< E = 10^((L + 0.691) / 10)
     double loudness;                ///< L = -0.691 + 10 * log10(E)
 };
 
 struct integrator {
-    double *cache[MAX_CHANNELS];    ///< window of filtered samples (N ms)
+    double **cache;                 ///< window of filtered samples (N ms)
     int cache_pos;                  ///< focus on the last added bin in the cache array
     int cache_size;
-    double sum[MAX_CHANNELS];       ///< sum of the last N ms filtered samples (cache content)
+    double *sum;                    ///< sum of the last N ms filtered samples (cache content)
     int filled;                     ///< 1 if the cache is completely filled, 0 otherwise
     double rel_threshold;           ///< relative threshold
     double sum_kept_powers;         ///< sum of the powers (weighted sums) above absolute threshold
@@ -111,9 +109,9 @@ typedef struct EBUR128Context {
 
     /* Filter caches.
      * The mult by 3 in the following is for X[i], X[i-1] and X[i-2] */
-    double x[MAX_CHANNELS * 3];     ///< 3 input samples cache for each channel
-    double y[MAX_CHANNELS * 3];     ///< 3 pre-filter samples cache for each channel
-    double z[MAX_CHANNELS * 3];     ///< 3 RLB-filter samples cache for each channel
+    double *x;                      ///< 3 input samples cache for each channel
+    double *y;                      ///< 3 pre-filter samples cache for each channel
+    double *z;                      ///< 3 RLB-filter samples cache for each channel
     double pre_b[3];                ///< pre-filter numerator coefficients
     double pre_a[3];                ///< pre-filter denominator coefficients
     double rlb_b[3];                ///< rlb-filter numerator coefficients
@@ -430,12 +428,23 @@ static int config_audio_output(AVFilterLink *outlink)
                    AV_CH_SURROUND_DIRECT_LEFT               |AV_CH_SURROUND_DIRECT_RIGHT)
 
     ebur128->nb_channels  = nb_channels;
+    ebur128->x            = av_calloc(nb_channels, 3 * sizeof(*ebur128->x));
+    ebur128->y            = av_calloc(nb_channels, 3 * sizeof(*ebur128->y));
+    ebur128->z            = av_calloc(nb_channels, 3 * sizeof(*ebur128->z));
     ebur128->ch_weighting = av_calloc(nb_channels, sizeof(*ebur128->ch_weighting));
-    if (!ebur128->ch_weighting)
+    if (!ebur128->ch_weighting || !ebur128->x || !ebur128->y || !ebur128->z)
         return AVERROR(ENOMEM);
 
 #define I400_BINS(x)  ((x) * 4 / 10)
 #define I3000_BINS(x) ((x) * 3)
+
+    ebur128->i400.sum = av_calloc(nb_channels, sizeof(*ebur128->i400.sum));
+    ebur128->i3000.sum = av_calloc(nb_channels, sizeof(*ebur128->i3000.sum));
+    ebur128->i400.cache = av_calloc(nb_channels, sizeof(*ebur128->i400.cache));
+    ebur128->i3000.cache = av_calloc(nb_channels, sizeof(*ebur128->i3000.cache));
+    if (!ebur128->i400.sum || !ebur128->i3000.sum ||
+        !ebur128->i400.cache || !ebur128->i3000.cache)
+        return AVERROR(ENOMEM);
 
     for (i = 0; i < nb_channels; i++) {
         /* channel weighting */
@@ -713,15 +722,15 @@ static int filter_frame(AVFilterLink *inlink, AVFrame *insamples)
 #define I_GATE_THRES -10  // initially defined to -8 LU in the first EBU standard
 
             if (loudness_400 >= ABS_THRES) {
-                double integrated_sum = 0;
-                int nb_integrated = 0;
+                double integrated_sum = 0.0;
+                uint64_t nb_integrated = 0;
                 int gate_hist_pos = gate_update(&ebur128->i400, power_400,
                                                 loudness_400, I_GATE_THRES);
 
                 /* compute integrated loudness by summing the histogram values
                  * above the relative threshold */
                 for (i = gate_hist_pos; i < HIST_SIZE; i++) {
-                    const int nb_v = ebur128->i400.histogram[i].count;
+                    const unsigned nb_v = ebur128->i400.histogram[i].count;
                     nb_integrated  += nb_v;
                     integrated_sum += nb_v * ebur128->i400.histogram[i].energy;
                 }
@@ -742,18 +751,18 @@ static int filter_frame(AVFilterLink *inlink, AVFrame *insamples)
             /* XXX: example code in EBU 3342 is ">=" but formula in BS.1770
              * specs is ">" */
             if (loudness_3000 >= ABS_THRES) {
-                int nb_powers = 0;
+                uint64_t nb_powers = 0;
                 int gate_hist_pos = gate_update(&ebur128->i3000, power_3000,
                                                 loudness_3000, LRA_GATE_THRES);
 
                 for (i = gate_hist_pos; i < HIST_SIZE; i++)
                     nb_powers += ebur128->i3000.histogram[i].count;
                 if (nb_powers) {
-                    int n, nb_pow;
+                    uint64_t n, nb_pow;
 
                     /* get lower loudness to consider */
                     n = 0;
-                    nb_pow = LRA_LOWER_PRC  * nb_powers / 100. + 0.5;
+                    nb_pow = LRA_LOWER_PRC * 0.01 * nb_powers + 0.5;
                     for (i = gate_hist_pos; i < HIST_SIZE; i++) {
                         n += ebur128->i3000.histogram[i].count;
                         if (n >= nb_pow) {
@@ -764,9 +773,9 @@ static int filter_frame(AVFilterLink *inlink, AVFrame *insamples)
 
                     /* get higher loudness to consider */
                     n = nb_powers;
-                    nb_pow = LRA_HIGHER_PRC * nb_powers / 100. + 0.5;
+                    nb_pow = LRA_HIGHER_PRC * 0.01 * nb_powers + 0.5;
                     for (i = HIST_SIZE - 1; i >= 0; i--) {
-                        n -= ebur128->i3000.histogram[i].count;
+                        n -= FFMIN(n, ebur128->i3000.histogram[i].count);
                         if (n < nb_pow) {
                             ebur128->lra_high = ebur128->i3000.histogram[i].loudness;
                             break;
@@ -993,16 +1002,25 @@ static av_cold void uninit(AVFilterContext *ctx)
     av_log(ctx, AV_LOG_INFO, "\n");
 
     av_freep(&ebur128->y_line_ref);
+    av_freep(&ebur128->x);
+    av_freep(&ebur128->y);
+    av_freep(&ebur128->z);
     av_freep(&ebur128->ch_weighting);
     av_freep(&ebur128->true_peaks);
     av_freep(&ebur128->sample_peaks);
     av_freep(&ebur128->true_peaks_per_frame);
+    av_freep(&ebur128->i400.sum);
+    av_freep(&ebur128->i3000.sum);
     av_freep(&ebur128->i400.histogram);
     av_freep(&ebur128->i3000.histogram);
     for (i = 0; i < ebur128->nb_channels; i++) {
-        av_freep(&ebur128->i400.cache[i]);
-        av_freep(&ebur128->i3000.cache[i]);
+        if (ebur128->i400.cache)
+            av_freep(&ebur128->i400.cache[i]);
+        if (ebur128->i3000.cache)
+            av_freep(&ebur128->i3000.cache[i]);
     }
+    av_freep(&ebur128->i400.cache);
+    av_freep(&ebur128->i3000.cache);
     av_frame_free(&ebur128->outpicref);
 #if CONFIG_SWRESAMPLE
     av_freep(&ebur128->swr_buf);

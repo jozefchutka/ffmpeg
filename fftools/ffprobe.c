@@ -2561,7 +2561,7 @@ static av_always_inline int process_frame(WriterContext *w,
     int ret = 0, got_frame = 0;
 
     clear_log(1);
-    if (dec_ctx && dec_ctx->codec) {
+    if (dec_ctx) {
         switch (par->codec_type) {
         case AVMEDIA_TYPE_VIDEO:
         case AVMEDIA_TYPE_AUDIO:
@@ -2730,8 +2730,11 @@ static int read_interval_packets(WriterContext *w, InputFile *ifile,
     //Flush remaining frames that are cached in the decoder
     for (i = 0; i < fmt_ctx->nb_streams; i++) {
         pkt->stream_index = i;
-        if (do_read_frames)
+        if (do_read_frames) {
             while (process_frame(w, ifile, frame, pkt, &(int){1}) > 0);
+            if (ifile->streams[i].dec_ctx)
+                avcodec_flush_buffers(ifile->streams[i].dec_ctx);
+        }
     }
 
 end:
@@ -2898,7 +2901,7 @@ static int show_stream(WriterContext *w, AVFormatContext *fmt_ctx, int stream_id
         break;
     }
 
-    if (dec_ctx && dec_ctx->codec && dec_ctx->codec->priv_class && show_private_data) {
+    if (dec_ctx && dec_ctx->codec->priv_class && show_private_data) {
         const AVOption *opt = NULL;
         while (opt = av_opt_next(dec_ctx->priv_data,opt)) {
             uint8_t *str;

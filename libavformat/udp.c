@@ -162,22 +162,40 @@ static int udp_set_multicast_ttl(int sockfd, int mcastTTL,
                                  struct sockaddr *addr,
                                  void *logctx)
 {
+    int protocol, cmd;
+
+    /* There is some confusion in the world whether IP_MULTICAST_TTL
+     * takes a byte or an int as an argument.
+     * BSD seems to indicate byte so we are going with that and use
+     * int and fall back to byte to be safe */
+    switch (addr->sa_family) {
 #ifdef IP_MULTICAST_TTL
-    if (addr->sa_family == AF_INET) {
-        if (setsockopt(sockfd, IPPROTO_IP, IP_MULTICAST_TTL, &mcastTTL, sizeof(mcastTTL)) < 0) {
-            ff_log_net_error(logctx, AV_LOG_ERROR, "setsockopt(IP_MULTICAST_TTL)");
+        case AF_INET:
+            protocol = IPPROTO_IP;
+            cmd      = IP_MULTICAST_TTL;
+            break;
+#endif
+#ifdef IPV6_MULTICAST_HOPS
+        case AF_INET6:
+            protocol = IPPROTO_IPV6;
+            cmd      = IPV6_MULTICAST_HOPS;
+            break;
+#endif
+        default:
+            return 0;
+    }
+
+    if (setsockopt(sockfd, protocol, cmd, &mcastTTL, sizeof(mcastTTL)) < 0) {
+        /* BSD compatibility */
+        unsigned char ttl = (unsigned char) mcastTTL;
+
+        ff_log_net_error(logctx, AV_LOG_DEBUG, "setsockopt(IPV4/IPV6 MULTICAST TTL)");
+        if (setsockopt(sockfd, protocol, cmd, &ttl, sizeof(ttl)) < 0) {
+            ff_log_net_error(logctx, AV_LOG_ERROR, "setsockopt(IPV4/IPV6 MULTICAST TTL)");
             return ff_neterrno();
         }
     }
-#endif
-#if defined(IPPROTO_IPV6) && defined(IPV6_MULTICAST_HOPS)
-    if (addr->sa_family == AF_INET6) {
-        if (setsockopt(sockfd, IPPROTO_IPV6, IPV6_MULTICAST_HOPS, &mcastTTL, sizeof(mcastTTL)) < 0) {
-            ff_log_net_error(logctx, AV_LOG_ERROR, "setsockopt(IPV6_MULTICAST_HOPS)");
-            return ff_neterrno();
-        }
-    }
-#endif
+
     return 0;
 }
 
@@ -674,6 +692,11 @@ static int udp_open(URLContext *h, const char *uri, int flags)
         }
         if (av_find_info_tag(buf, sizeof(buf), "ttl", p)) {
             s->ttl = strtol(buf, NULL, 10);
+            if (s->ttl < 0 || s->ttl > 255) {
+                av_log(h, AV_LOG_ERROR, "ttl(%d) should be in range [0,255]\n", s->ttl);
+                ret = AVERROR(EINVAL);
+                goto fail;
+            }
         }
         if (av_find_info_tag(buf, sizeof(buf), "udplite_coverage", p)) {
             s->udplite_coverage = strtol(buf, NULL, 10);
